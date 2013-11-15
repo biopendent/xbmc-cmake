@@ -818,7 +818,11 @@ msgctxt "#199"
 msgid "Web interface"
 msgstr ""
 
-#empty strings from id 200 to 201
+msgctxt "#200"
+msgid "Audio encoders"
+msgstr ""
+
+#empty string with id 201
 
 #: xbmc/playlists/SmartPlaylist.cpp
 msgctxt "#202"
@@ -15012,4 +15016,9 @@ msgstr ""
 #: system/settings/rbp.xml
 msgctxt "#37021"
 msgid "Set GUI resolution limit"
+msgstr ""
+
+#: system/settings/settings.xml
+msgctxt "#37020"
+msgid "Configure audio encoder settings such as quality and compression level"
 msgstr ""
