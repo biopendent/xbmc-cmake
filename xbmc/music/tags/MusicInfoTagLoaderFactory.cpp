@@ -24,7 +24,6 @@
 #include "MusicInfoTagLoaderCDDA.h"
 #include "MusicInfoTagLoaderShn.h"
 #include "MusicInfoTagLoaderWav.h"
-#include "MusicInfoTagLoaderNSF.h"
 #include "MusicInfoTagLoaderSPC.h"
 #include "MusicInfoTagLoaderDatabase.h"
 #include "MusicInfoTagLoaderASAP.h"
@@ -88,7 +87,7 @@ IMusicInfoTagLoader* CMusicInfoTagLoaderFactory::CreateLoader(const CStdString& 
       strExtension == "m4a" || strExtension == "mp4" ||
       strExtension == "mpc" || strExtension == "mpp" || strExtension == "mp+" ||
       strExtension == "ogg" || strExtension == "oga" || strExtension == "oggstream" ||
-      strExtension == "mod" || strExtension == "nsf" || strExtension == "nsfstream" ||
+      strExtension == "mod" ||
       strExtension == "s3m" || strExtension == "it" || strExtension == "xm" ||
       strExtension == "wv")
   {
