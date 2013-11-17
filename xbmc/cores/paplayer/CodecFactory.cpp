@@ -21,7 +21,6 @@
 #include "system.h"
 #include "CodecFactory.h"
 #include "MP3codec.h"
-#include "OGGcodec.h"
 #include "WAVcodec.h"
 #ifdef HAS_SPC_CODEC
 #include "SPCCodec.h"
@@ -135,8 +134,6 @@ ICodec* CodecFactory::CreateCodecDemux(const CStdString& strFile, const CStdStri
     pCodec->SetContentType(strContent);
     return pCodec;
   }
-  else if( strContent.Equals("application/ogg") || strContent.Equals("audio/ogg"))
-    return CreateOGGCodec(strFile,filecache);
   else if (strContent.Equals("audio/x-xbmc-pcm"))
   {
     // audio/x-xbmc-pcm this is the used codec for AirTunes
@@ -179,29 +176,8 @@ ICodec* CodecFactory::CreateCodecDemux(const CStdString& strFile, const CStdStri
     }
     delete codec;
   }
-  else if (urlFile.GetFileType().Equals("ogg") || urlFile.GetFileType().Equals("oggstream") || urlFile.GetFileType().Equals("oga"))
-    return CreateOGGCodec(strFile,filecache);
 
   //default
   return CreateCodec(urlFile.GetFileType());
-}
-
-ICodec* CodecFactory::CreateOGGCodec(const CStdString& strFile,
-                                     unsigned int filecache)
-{
-  // oldnemesis: we want to use OGGCodec() for OGG music since unlike DVDCodec 
-  // it provides better timings for Karaoke. However OGGCodec() cannot handle 
-  // ogg-flac and ogg videos, that's why this block.
-  ICodec* codec = new OGGCodec();
-  try
-  {
-    if (codec->Init(strFile, filecache))
-      return codec;
-  }
-  catch( ... )
-  {
-  }
-  delete codec;
-  return new DVDPlayerCodec();
 }
 
