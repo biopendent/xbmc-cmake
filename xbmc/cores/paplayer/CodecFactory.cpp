@@ -22,7 +22,6 @@
 #include "CodecFactory.h"
 #include "MP3codec.h"
 #include "OGGcodec.h"
-#include "FLACcodec.h"
 #include "WAVcodec.h"
 #ifdef HAS_SPC_CODEC
 #include "SPCCodec.h"
@@ -71,8 +70,6 @@ ICodec* CodecFactory::CreateCodec(const CStdString& strFileType)
     return new DVDPlayerCodec();
   else if (strFileType.Equals("mka"))
     return new DVDPlayerCodec();
-  else if (strFileType.Equals("flac"))
-    return new FLACCodec();
   else if (strFileType.Equals("wav"))
     return new DVDPlayerCodec();
   else if (strFileType.Equals("dts") || strFileType.Equals("ac3") ||
@@ -151,8 +148,6 @@ ICodec* CodecFactory::CreateCodecDemux(const CStdString& strFile, const CStdStri
     dvdcodec->SetContentType(strContent);
     return dvdcodec;
   }
-  else if (strContent.Equals("audio/flac") || strContent.Equals("audio/x-flac") || strContent.Equals("application/x-flac"))
-    return new FLACCodec();
 
   if (urlFile.GetProtocol() == "shout")
   {
