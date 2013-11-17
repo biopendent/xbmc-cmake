@@ -26,7 +26,6 @@
 #ifdef HAS_SPC_CODEC
 #include "SPCCodec.h"
 #endif
-#include "SIDCodec.h"
 #include "VGMCodec.h"
 #include "ADPCMCodec.h"
 #include "TimidityCodec.h"
@@ -82,8 +81,6 @@ ICodec* CodecFactory::CreateCodec(const CStdString& strFileType)
   else if (strFileType.Equals("spc"))
     return new SPCCodec();
 #endif
-  else if (strFileType.Equals("sid") || strFileType.Equals("sidstream"))
-    return new SIDCodec();
   else if (VGMCodec::IsSupportedFormat(strFileType))
     return new VGMCodec();
   else if (strFileType.Equals("wma"))
