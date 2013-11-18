@@ -22,7 +22,6 @@
 #include "CodecFactory.h"
 #include "MP3codec.h"
 #include "WAVcodec.h"
-#include "ADPCMCodec.h"
 #ifdef HAS_ASAP_CODEC
 #include "ASAPCodec.h"
 #endif
@@ -75,8 +74,6 @@ ICodec* CodecFactory::CreateCodec(const CStdString& strFileType)
     return new DVDPlayerCodec();
   else if (strFileType.Equals("aiff") || strFileType.Equals("aif"))
     return new DVDPlayerCodec();
-  else if (strFileType.Equals("xwav"))
-    return new ADPCMCodec();
 #ifdef HAS_ASAP_CODEC
   else if (ASAPCodec::IsSupportedFormat(strFileType) || strFileType.Equals("asapstream"))
     return new ASAPCodec();
@@ -149,12 +146,6 @@ ICodec* CodecFactory::CreateCodecDemux(const CStdString& strFile, const CStdStri
       return dvdcodec;
     }
     delete dvdcodec;
-    codec = new ADPCMCodec();
-    if (codec->Init(strFile, filecache))
-    {
-      return codec;
-    }
-    delete codec;
 
     codec = new WAVCodec();
     if (codec->Init(strFile, filecache))
