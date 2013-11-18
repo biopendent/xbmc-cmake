@@ -24,7 +24,6 @@
 #include "MusicInfoTagLoaderCDDA.h"
 #include "MusicInfoTagLoaderShn.h"
 #include "MusicInfoTagLoaderWav.h"
-#include "MusicInfoTagLoaderSPC.h"
 #include "MusicInfoTagLoaderDatabase.h"
 #include "MusicInfoTagLoaderASAP.h"
 #include "utils/StringUtils.h"
@@ -108,11 +107,6 @@ IMusicInfoTagLoader* CMusicInfoTagLoaderFactory::CreateLoader(const CStdString& 
   else if (strExtension == "wav")
   {
     CMusicInfoTagLoaderWAV *pTagLoader = new CMusicInfoTagLoaderWAV();
-    return (IMusicInfoTagLoader*)pTagLoader;
-  }
-  else if (strExtension == "spc")
-  {
-    CMusicInfoTagLoaderSPC *pTagLoader = new CMusicInfoTagLoaderSPC();
     return (IMusicInfoTagLoader*)pTagLoader;
   }
 #ifdef HAS_ASAP_CODEC

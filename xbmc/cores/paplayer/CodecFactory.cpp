@@ -22,9 +22,6 @@
 #include "CodecFactory.h"
 #include "MP3codec.h"
 #include "WAVcodec.h"
-#ifdef HAS_SPC_CODEC
-#include "SPCCodec.h"
-#endif
 #include "ADPCMCodec.h"
 #ifdef HAS_ASAP_CODEC
 #include "ASAPCodec.h"
@@ -74,10 +71,6 @@ ICodec* CodecFactory::CreateCodec(const CStdString& strFileType)
     return new DVDPlayerCodec();
   else if (strFileType.Equals("wv"))
     return new DVDPlayerCodec();
-#ifdef HAS_SPC_CODEC
-  else if (strFileType.Equals("spc"))
-    return new SPCCodec();
-#endif
   else if (strFileType.Equals("wma"))
     return new DVDPlayerCodec();
   else if (strFileType.Equals("aiff") || strFileType.Equals("aif"))
