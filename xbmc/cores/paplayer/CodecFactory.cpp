@@ -25,7 +25,6 @@
 #ifdef HAS_SPC_CODEC
 #include "SPCCodec.h"
 #endif
-#include "VGMCodec.h"
 #include "ADPCMCodec.h"
 #include "TimidityCodec.h"
 #ifdef HAS_ASAP_CODEC
@@ -80,8 +79,6 @@ ICodec* CodecFactory::CreateCodec(const CStdString& strFileType)
   else if (strFileType.Equals("spc"))
     return new SPCCodec();
 #endif
-  else if (VGMCodec::IsSupportedFormat(strFileType))
-    return new VGMCodec();
   else if (strFileType.Equals("wma"))
     return new DVDPlayerCodec();
   else if (strFileType.Equals("aiff") || strFileType.Equals("aif"))
