@@ -279,10 +279,16 @@ bool CVFSEntry::GetDirectory(const CStdString& strPath, CFileItemList& items)
 
   CURL url(strPath);
 
+  VFSCallbacks callbacks;
+  callbacks.ctx = this;
+  callbacks.GetKeyboardInput = CVFSEntryIDirectoryWrapper::DoGetKeyboardInput;
+  callbacks.SetErrorDialog = CVFSEntryIDirectoryWrapper::DoSetErrorDialog;
+  callbacks.RequireAuthentication = CVFSEntryIDirectoryWrapper::DoRequireAuthentication;
+
   VFSDirEntry* entries;
   int num_entries;
   CVFSURLWrapper url2(url);
-  void* ctx = m_pStruct->GetDirectory(&url2.url, &entries, &num_entries);
+  void* ctx = m_pStruct->GetDirectory(&url2.url, &entries, &num_entries, &callbacks);
   if (ctx)
   {
     VFSDirEntriesToCFileItemList(num_entries, entries, items);
@@ -556,6 +562,59 @@ bool CVFSEntryIDirectoryWrapper::GetDirectory(const CStdString& strPath,
   return m_addon->GetDirectory(strPath, items);
 }
 
+bool CVFSEntryIDirectoryWrapper::DoGetKeyboardInput(void* ctx,
+                                                    const char* heading,
+                                                    char** input)
+{
+  return ((CVFSEntryIDirectoryWrapper*)ctx)->GetKeyboardInput2(heading, input);
+}
+
+bool CVFSEntryIDirectoryWrapper::GetKeyboardInput2(const char* heading,
+                                                   char** input)
+{
+  CStdString inp;
+  bool result;
+  if ((result=GetKeyboardInput(CVariant(std::string(heading)), inp)))
+    *input = strdup(inp.c_str());
+
+  return result;
+}
+
+void CVFSEntryIDirectoryWrapper::DoSetErrorDialog(void* ctx, const char* heading,
+                                                  const char* line1,
+                                                  const char* line2,
+                                                  const char* line3)
+{
+  ((CVFSEntryIDirectoryWrapper*)ctx)->SetErrorDialog2(heading, line1,
+                                                      line2, line3);
+}
+
+void CVFSEntryIDirectoryWrapper::SetErrorDialog2(const char* heading,
+                                                 const char* line1,
+                                                 const char* line2,
+                                                 const char* line3)
+{
+  CVariant l2=0, l3=0;
+  if (line2)
+    l2 = std::string(line2);
+  if (line3)
+    l3 = std::string(line3);
+
+  SetErrorDialog(CVariant(std::string(heading)),
+                 CVariant(std::string(line1)), l2, l3);
+}
+
+void CVFSEntryIDirectoryWrapper::DoRequireAuthentication(void* ctx,
+                                                         const char* url)
+{
+  ((CVFSEntryIDirectoryWrapper*)ctx)->RequireAuthentication2(url);
+}
+
+void CVFSEntryIDirectoryWrapper::RequireAuthentication2(const char* url)
+{
+  RequireAuthentication(url);
+}
+                                
 CVFSEntryManager::CVFSEntryManager()
 {
 }
